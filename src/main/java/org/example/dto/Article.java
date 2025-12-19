@@ -10,6 +10,16 @@ public class Article {
     private String title;
     private String body;
 
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Article(int id, String title, String body) {
         this.id = id;
         this.title = title;
@@ -32,6 +42,8 @@ public class Article {
         this.memberId = (int) articleMap.get("memberId");
         this.title = (String) articleMap.get("title");
         this.body = (String) articleMap.get("body");
+
+        this.name = (String) articleMap.get("name");
     }
 
     public String getRegDate() {
