@@ -5,7 +5,6 @@ import org.example.dto.Article;
 import org.example.service.ArticleService;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 public class ArticleController {
@@ -68,10 +67,15 @@ public class ArticleController {
             return;
         }
 
-        Map<String, Object> articleMap = articleService.getArticleById(id);
+        Article article = articleService.getArticleById(id);
 
-        if (articleMap.isEmpty()) {
+        if (article == null) {
             System.out.println(id + "번 글은 없어");
+            return;
+        }
+
+        if (article.getMemberId() != Container.session.loginedMemberId) {
+            System.out.println("권한 없음");
             return;
         }
 
@@ -100,14 +104,13 @@ public class ArticleController {
 
         System.out.println("==상세보기==");
 
-        Map<String, Object> articleMap = articleService.getArticleById(id);
+        Article article = articleService.getArticleById(id);
 
-        if (articleMap.isEmpty()) {
+        if (article == null) {
             System.out.println(id + "번 글은 없어");
             return;
         }
 
-        Article article = new Article(articleMap);
 
         System.out.println("번호 : " + article.getId());
         System.out.println("작성날짜 : " + article.getRegDate());
@@ -132,10 +135,15 @@ public class ArticleController {
             return;
         }
 
-        Map<String, Object> articleMap = articleService.getArticleById(id);
+        Article article = articleService.getArticleById(id);
 
-        if (articleMap.isEmpty()) {
+        if (article == null) {
             System.out.println(id + "번 글은 없어");
+            return;
+        }
+
+        if (article.getMemberId() != Container.session.loginedMemberId) {
+            System.out.println("권한 없음");
             return;
         }
 
