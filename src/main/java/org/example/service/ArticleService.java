@@ -4,7 +4,9 @@ import org.example.container.Container;
 import org.example.dao.ArticleDao;
 import org.example.dto.Article;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ArticleService {
 
@@ -14,13 +16,26 @@ public class ArticleService {
         this.articleDao = Container.articleDao;
     }
 
-    public int doWrite(int memberId, String title, String body) {
-        return articleDao.doWrite(memberId,title, body);
+    public List<Article> getArticles() {
+        return articleDao.getArticles();
+    }
+
+    public List<Article> getForPrintArticles(int page, int itemsPerPage, String searchKeyword) {
+        int limitFrom = (page - 1) * itemsPerPage;
+        int limitTake = itemsPerPage;
+
+        Map<String, Object> args = new HashMap<>();
+        args.put("searchKeyword", searchKeyword);
+        args.put("limitTake", limitTake);
+        args.put("limitFrom", limitFrom);
+
+        return articleDao.getForPrintArticles(args);
 
     }
 
-    public List<Article> getArticles() {
-        return articleDao.getArticles();
+    public int doWrite(int memberId, String title, String body) {
+        return articleDao.doWrite(memberId, title, body);
+
     }
 
     public Article getArticleById(int id) {
@@ -34,4 +49,6 @@ public class ArticleService {
     public void doDelete(int id) {
         articleDao.doDelete(id);
     }
+
+
 }
