@@ -20,13 +20,19 @@ public class ArticleController {
     }
 
     public void doWrite() {
+        if (Container.session.isLogined() == false) {
+            System.out.println("로그인 후 이용하세요");
+            return;
+        }
         System.out.println("==글쓰기==");
         System.out.print("제목 : ");
         String title = sc.nextLine();
         System.out.print("내용 : ");
         String body = sc.nextLine();
 
-        int id = articleService.doWrite(title, body);
+        int memberId = Container.session.loginedMemberId;
+
+        int id = articleService.doWrite(memberId, title, body);
 
         System.out.println(id + "번 글이 생성됨");
     }
@@ -41,13 +47,17 @@ public class ArticleController {
             return;
         }
 
-        System.out.println("  번호  /   제목  ");
+        System.out.println("  번호  /   작성자    /   제목  ");
         for (Article article : articles) {
-            System.out.printf("  %d     /   %s   \n", article.getId(), article.getTitle());
+            System.out.printf("  %d     /   %d        /   %s   \n", article.getId(), article.getMemberId(), article.getTitle());
         }
     }
 
     public void doModify(String cmd) {
+        if (Container.session.isLogined() == false) {
+            System.out.println("로그인 후 이용하세요");
+            return;
+        }
 
         int id = 0;
 
@@ -107,6 +117,10 @@ public class ArticleController {
     }
 
     public void doDelete(String cmd) {
+        if (Container.session.isLogined() == false) {
+            System.out.println("로그인 후 이용하세요");
+            return;
+        }
 
         int id = 0;
 
